@@ -1,4 +1,5 @@
-public class ClimateFactors {
+public class ClimateFactors
+{
     /*
     private float tempMax;
     private float tempMin;
@@ -11,21 +12,25 @@ public class ClimateFactors {
     private float currentPrec; //Percentage
     private float currentHumid; //Percentage
 
-    public ClimateFactors(float temp, float prec, float humid){
+    public ClimateFactors(float temp, float prec, float humid)
+    {
         currentTemp = temp;
         currentPrec = prec;
         currentHumid = humid;
     }
 
-    public float getCurrentTemperature(){
+    public float getCurrentTemperature()
+    {
         return currentTemp;
     }
 
-    public float getCurrentPrecipitation(){
+    public float getCurrentPrecipitation()
+    {
         return currentPrec;
     }
 
-    public float getCurrentHumidity(){
+    public float getCurrentHumidity()
+    {
         return currentHumid;
     }
 }

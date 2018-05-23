@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class MapDisplay : MonoBehaviour {
+public class MapDisplay : MonoBehaviour
+{
     public Renderer textureRenderer;
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;

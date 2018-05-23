@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,26 +10,27 @@ public class World
     enum BiomeType { BEACH, RAIN_FOREST, MOUNTAIN, TUNDRA, DESERT, SAVANNAH, NO_BIOME };
     private int animalCount = 0;
     private int k = 0;
-    private float avAltitude = 0;
 
     private List<Biome> biomeTypes;
     private static BinarySearchTree<LivingThing> database;
     private static List<LivingThing> explored = new List<LivingThing>();
 
     internal Dictionary<Coord, int> grid;
-    private List<Plant> currentPlants;
-    private List<Animal> currentAnimals;
+    private static List<Plant> currentPlants;
+    private static List<Animal> currentAnimals;
 
     public static BinarySearchTree<LivingThing> getDatabase() { return database; }
     public static List<LivingThing> getExplored() { return explored; }
+    public static List<Animal> getCurrentAnimals() { return currentAnimals; }
+    public static List<Plant> getCurrentPlants() { return currentPlants; }
 
     private void fillBiomeListFromFile()
     {
         biomeTypes = new List<Biome>();
         var inp = Resources.Load<TextAsset>("biomes");
         var inpContent = inp.text.Split("\n"[0]);
-        int i=0;
-        foreach(var line in inpContent)
+        int i = 0;
+        foreach (var line in inpContent)
         {
             string[] tokens = line.Split(',');
             int[] intTokens = new int[tokens.Length - 2];
@@ -52,7 +51,7 @@ public class World
         var inp = Resources.Load<TextAsset>("animals");
         var inpContent = inp.text.Split("\n"[0]);
         Coord nullCoord = new Coord(-1, -1);
-        foreach(var line in inpContent)
+        foreach (var line in inpContent)
         {
             string[] tokens = line.Split(',');
             int id = int.Parse(tokens[0]);
@@ -101,14 +100,14 @@ public class World
         int lastWaterX = 0;
         if (i < current.getY() && j < current.getX())
         {
-            lastWaterY = grid[i,j].getNearestWater().getY();
-            lastWaterX = grid[i,j].getNearestWater().getX();
+            lastWaterY = grid[i, j].getNearestWater().getY();
+            lastWaterX = grid[i, j].getNearestWater().getX();
         }
         for (i = lastWaterY; i < altitudeMap.GetLength(0); i++)
             for (j = lastWaterX; j < altitudeMap.GetLength(0); j++)
             {
                 k++;
-                if (altitudeMap[i,j] < 0)
+                if (altitudeMap[i, j] < 0)
                 {
                     int x = current.getX() - j;
                     int y = current.getY() - i;
@@ -124,7 +123,7 @@ public class World
             }
         return tempNode;
     }
-    
+
     public World()
     {
         fillDatabaseFromFile();
@@ -135,9 +134,9 @@ public class World
 
         float[,] hMap = new float[size, size];
 
-        for (int i=0; i< size; i++)
+        for (int i = 0; i < size; i++)
         {
-            for(int j=0; j< size; j++)
+            for (int j = 0; j < size; j++)
             {
                 hMap[i, j] = mapGen.noiseMap[j, i];
             }
@@ -165,8 +164,8 @@ public class World
                 {
                     for (int k = b * GRID_DIVIDER; k < b * GRID_DIVIDER + GRID_DIVIDER; k++)
                     {
-                        wDisAv += gMap[m,k].getDistanceFromWater();
-                        altAv += gMap[m,k].getAltitude();
+                        wDisAv += gMap[m, k].getDistanceFromWater();
+                        altAv += gMap[m, k].getAltitude();
                     }
                     m++;
                 }
@@ -265,8 +264,10 @@ public class World
     }
 
 
-    private void fillCurrents(Stack<Coord> Coords, int type) {
-        Animal[] animalArray = new Animal[5];
+    private void fillCurrents(Stack<Coord> Coords, int type)
+    {
+
+        /*Animal[] animalArray = new Animal[5];
         biomeTypes[type].getAnimalSet().CopyTo(animalArray);
         Plant[] plantArray = new Plant[5];
         biomeTypes[type].getPlantSet().CopyTo(plantArray);
@@ -278,14 +279,18 @@ public class World
                 i = generator.Next(5);
                 Animal newAnimal = animalArray[i];
                 newAnimal.setPosition(point);
-                currentAnimals.Add(newAnimal);
+                if (!currentAnimals.Contains(newAnimal)) { }
+                    currentAnimals.Add(newAnimal);
+                //Debug.Log("added: " + newAnimal);
             }
             if (i == 2) {
                 i = generator.Next(5);
                 Plant newPlant = plantArray[i];
                 newPlant.setPosition(point);
-                currentPlants.Add(newPlant);
+                if(!currentPlants.Contains(newPlant))
+                    currentPlants.Add(newPlant);
+                //Debug.Log("added: " + newPlant);
             }
-        }
+        }*/
     }
 }

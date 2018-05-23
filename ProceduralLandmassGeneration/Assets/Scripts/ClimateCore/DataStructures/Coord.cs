@@ -40,7 +40,7 @@ public class Coord
     public override bool Equals(object obj)
     {
         var objToCoord = (Coord)obj;
-        return objToCoord.getX()==this.getX() && objToCoord.getY() == this.getY();
+        return objToCoord.getX() == this.getX() && objToCoord.getY() == this.getY();
     }
 
     public override string ToString()

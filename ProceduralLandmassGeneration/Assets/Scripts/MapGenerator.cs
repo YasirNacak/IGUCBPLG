@@ -4,24 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class MapGenerator : MonoBehaviour {
+public class MapGenerator : MonoBehaviour
+{
 
-    public enum DrawMode { NoiseMap, ColorMap, BiomeMap, MixedMap, BiomeMesh, HeightMesh, MixedMesh};
+    public enum DrawMode { NoiseMap, ColorMap, BiomeMap, MixedMap, BiomeMesh, HeightMesh, MixedMesh };
     public DrawMode drawMode;
 
     [Range(20, 200)]
     public int mapSize;
 
-    [Range(10,40)]
+    [Range(10, 40)]
     public float noiseScale;
 
     [Range(1, 6)]
     public int octaves;
 
-    [Range(0.25f,0.75f)]
+    [Range(0.25f, 0.75f)]
     public float persistance;
 
-    [Range(1,2)]
+    [Range(1, 2)]
     public float lacunarity;
 
     [Range(1, 512)]
@@ -29,7 +30,7 @@ public class MapGenerator : MonoBehaviour {
 
     public Vector2 offset;
 
-    [Range(1,40)]
+    [Range(1, 40)]
     public int meshHeightMultiplier;
 
     [Range(0, 1)]
@@ -50,6 +51,8 @@ public class MapGenerator : MonoBehaviour {
     [HideInInspector]
     public bool isCreating = true;
 
+    private World world;
+
     public void GenerateMap()
     {
         noiseMap = Noise.GenerateNoiseMap(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
@@ -62,14 +65,14 @@ public class MapGenerator : MonoBehaviour {
 
         heightRegions[0].height = waterLevel;
 
-        for(int i=1; i<6; i++)
+        for (int i = 1; i < 6; i++)
         {
             heightRegions[i].height = waterLevel + i * deltaHeight;
         }
 
-        for(int i=0; i<mapSize; i++)
+        for (int i = 0; i < mapSize; i++)
         {
-            for(int j=0; j<mapSize; j++)
+            for (int j = 0; j < mapSize; j++)
             {
                 float currentHeight = noiseMap[i, j];
                 for (int k = 0; k < heightRegions.Length; k++)
@@ -83,8 +86,8 @@ public class MapGenerator : MonoBehaviour {
             }
         }
 
-        World world = new World();
-        
+        world = new World();
+
         for (int i = 0; i < mapSize; i++)
         {
             for (int j = 0; j < mapSize; j++)
@@ -107,7 +110,7 @@ public class MapGenerator : MonoBehaviour {
             for (int j = 0; j < mapSize; j++)
             {
                 float currentBiome = world.grid[new Coord(i, j)];
-                
+
                 for (int k = 0; k < biomeRegions.Length; k++)
                 {
                     if (currentBiome == biomeRegions[k].biomeValue)
@@ -120,7 +123,7 @@ public class MapGenerator : MonoBehaviour {
                         float bMG = biomeRegions[k].color.g;
                         float bMB = biomeRegions[k].color.b;
 
-                        Color final = new Color(Mathf.Sqrt((cMR * cMR + bMR * bMR)/2), Mathf.Sqrt((cMG * cMG + bMG * bMG) / 2), Mathf.Sqrt((cMB * cMB + bMB * bMB) / 2), 1.0f);
+                        Color final = new Color(Mathf.Sqrt((cMR * cMR + bMR * bMR) / 2), Mathf.Sqrt((cMG * cMG + bMG * bMG) / 2), Mathf.Sqrt((cMB * cMB + bMB * bMB) / 2), 1.0f);
 
                         mixedColorMap[i * mapSize + j] = final;
                         break;
@@ -145,13 +148,14 @@ public class MapGenerator : MonoBehaviour {
 
     private void OnValidate()
     {
-        if(mapSize < 1) { mapSize = 1; }
-        if(mapSize < 1) { mapSize = 1; }
-        if(lacunarity < 1) { lacunarity = 1; }
-        if(octaves < 0) { octaves = 0; }
+        if (mapSize < 1) { mapSize = 1; }
+        if (mapSize < 1) { mapSize = 1; }
+        if (lacunarity < 1) { lacunarity = 1; }
+        if (octaves < 0) { octaves = 0; }
     }
 
-    public void setSeed() {
+    public void setSeed()
+    {
         seed = (int)GameObject.Find("SeedSlider").GetComponent<Slider>().value;
         GenerateMap();
     }
@@ -224,7 +228,7 @@ public class MapGenerator : MonoBehaviour {
         GameObject.Find("Main Camera").transform.position = new Vector3(0, 250f, 0);
         GameObject.Find("Main Camera").transform.localEulerAngles = new Vector3(60f, 0, 0);
         meshObject.SetActive(true);
-        
+
         waterObject.SetActive(true);
         planeObject.SetActive(false);
         drawMode = DrawMode.HeightMesh;
@@ -252,6 +256,21 @@ public class MapGenerator : MonoBehaviour {
         GameObject.Find("LacunarityText").SetActive(false);
         GameObject.Find("HeightMultiplierText").SetActive(false);
         GameObject.Find("WaterLevelText").SetActive(false);
+
+        //GameObject go = Instantiate(Resources.Load("Prefabs/Crab")) as GameObject;
+
+        //Debug.Log(world.fillCurrentsCallCount);
+
+        Debug.Log("Animals In This World");
+        foreach (Animal a in World.getCurrentAnimals())
+        {
+            Debug.Log(a);
+        }
+
+        /*Debug.Log("Plants In This World");
+        foreach (Plant p in World.getCurrentPlants()){
+            Debug.Log(p);
+        }*/
     }
 
     public void QuitGame()

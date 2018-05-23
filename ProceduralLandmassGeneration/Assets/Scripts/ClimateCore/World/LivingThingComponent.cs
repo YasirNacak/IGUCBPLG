@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class LivingThingComponent : MonoBehaviour {
+public class LivingThingComponent : MonoBehaviour
+{
     private LivingThing livingThing;
     public int id;
 

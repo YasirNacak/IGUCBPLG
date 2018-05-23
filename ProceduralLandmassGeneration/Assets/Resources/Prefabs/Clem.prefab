@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 65923905535481572}
   - component: {fileID: 23316432729176756}
   - component: {fileID: 114654282710822552}
+  - component: {fileID: 54675855179972746}
   m_Layer: 0
   m_Name: Clem
   m_TagString: Untagged
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1762454014608126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 25, y: 25, z: 25}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,6 +85,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1762454014608126}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54675855179972746
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1762454014608126}
+  serializedVersion: 2
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 100
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65923905535481572
 BoxCollider:
   m_ObjectHideFlags: 1

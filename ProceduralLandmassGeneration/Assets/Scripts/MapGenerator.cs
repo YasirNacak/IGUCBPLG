@@ -235,8 +235,10 @@ public class MapGenerator : MonoBehaviour
         isCreating = false;
         GenerateMap();
         meshObject.AddComponent<MeshCollider>();
-        GameObject.Find("Water").transform.position = new Vector3(0, waterLevel * 150f, 0);
+        meshObject.transform.position = new Vector3(mapSize / 2 * 10, 0, -mapSize / 2 * 10);
+        GameObject.Find("Water").transform.position = new Vector3(mapSize / 2 * 10, waterLevel * 150f, -mapSize / 2 * 10);
         GameObject.Find("Water").transform.localScale = new Vector3(mapSize, 1, mapSize);
+        GameObject.Find("Main Camera").transform.position = new Vector3(mapSize / 2 * 10, 0, -mapSize / 2 * 10);
 
         GameObject.Find("PlayButton").SetActive(false);
         GameObject.Find("SeedSlider").SetActive(false);
@@ -257,20 +259,20 @@ public class MapGenerator : MonoBehaviour
         GameObject.Find("HeightMultiplierText").SetActive(false);
         GameObject.Find("WaterLevelText").SetActive(false);
 
-        //GameObject go = Instantiate(Resources.Load("Prefabs/Crab")) as GameObject;
-
-        //Debug.Log(world.fillCurrentsCallCount);
-
-        Debug.Log("Animals In This World");
         foreach (Animal a in World.getCurrentAnimals())
         {
-            Debug.Log(a);
+            // TODO : After adding all prefabs, remove the if and add a variable string to resource load
+            if (a.getName().Equals("Crab"))
+            {
+                GameObject go = Instantiate(Resources.Load("Prefabs/Crab")) as GameObject;
+                go.transform.position = new Vector3(a.getPosition().getX() * 10, (meshHeightMultiplier * 10.0f), -a.getPosition().getY() * 10);
+            }
         }
 
-        /*Debug.Log("Plants In This World");
-        foreach (Plant p in World.getCurrentPlants()){
-            Debug.Log(p);
-        }*/
+        foreach(Plant p in World.getCurrentPlants())
+        {
+
+        }
     }
 
     public void QuitGame()

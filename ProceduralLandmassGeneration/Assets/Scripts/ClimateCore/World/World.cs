@@ -10,6 +10,7 @@ public class World
     enum BiomeType { BEACH, RAIN_FOREST, MOUNTAIN, TUNDRA, DESERT, SAVANNAH, NO_BIOME };
     private int animalCount = 0;
     private int k = 0;
+    private int size;
 
     private List<Biome> biomeTypes;
     private static BinarySearchTree<LivingThing> database;
@@ -130,7 +131,7 @@ public class World
         fillBiomeListFromFile();
 
         MapGenerator mapGen = GameObject.Find("MapGenerator").GetComponent<MapGenerator>();
-        int size = mapGen.mapSize;
+        size = mapGen.mapSize;
 
         float[,] hMap = new float[size, size];
 
@@ -153,7 +154,6 @@ public class World
         currentPlants = new List<Plant>();
         currentAnimals = new List<Animal>();
         int tempM = 0;
-        Stack<Coord> coords = new Stack<Coord>();
 
         for (int b = 0; b < size / GRID_DIVIDER; b++)
         {
@@ -180,11 +180,9 @@ public class World
                         {
                             newCoord = new Coord(k, tempM);
                             grid[newCoord] = (int)BiomeType.BEACH;
-                            coords.Push(newCoord);
                         }
                         tempM++;
                     }
-                    fillCurrents(coords, (int)BiomeType.BEACH);
                 }
                 else if (altAv < AVERAGE_ALTITUDE && wDisAv >= MINIMUM_WATER_DISTANCE && wDisAv < AVERAGE_WATER_DISTANCE)
                 {
@@ -194,11 +192,9 @@ public class World
                         {
                             newCoord = new Coord(k, tempM);
                             grid[newCoord] = (int)BiomeType.RAIN_FOREST;
-                            coords.Push(newCoord);
                         }
                         tempM++;
                     }
-                    fillCurrents(coords, (int)BiomeType.RAIN_FOREST);
                 }
                 else if (altAv >= AVERAGE_ALTITUDE && wDisAv < AVERAGE_WATER_DISTANCE)
                 {
@@ -208,11 +204,9 @@ public class World
                         {
                             newCoord = new Coord(k, tempM);
                             grid[newCoord] = (int)BiomeType.MOUNTAIN;
-                            coords.Push(newCoord);
                         }
                         tempM++;
                     }
-                    fillCurrents(coords, (int)BiomeType.MOUNTAIN);
                 }
                 else if (altAv >= AVERAGE_ALTITUDE && wDisAv >= AVERAGE_WATER_DISTANCE)
                 {
@@ -222,11 +216,9 @@ public class World
                         {
                             newCoord = new Coord(k, tempM);
                             grid[newCoord] = (int)BiomeType.TUNDRA;
-                            coords.Push(newCoord);
                         }
                         tempM++;
                     }
-                    fillCurrents(coords, (int)BiomeType.TUNDRA);
                 }
                 else if (altAv >= 0 && altAv < AVERAGE_ALTITUDE / 2 && wDisAv >= AVERAGE_WATER_DISTANCE)
                 {
@@ -236,11 +228,9 @@ public class World
                         {
                             newCoord = new Coord(k, tempM);
                             grid[newCoord] = (int)BiomeType.DESERT;
-                            coords.Push(newCoord);
                         }
                         tempM++;
                     }
-                    fillCurrents(coords, (int)BiomeType.DESERT);
                 }
                 else if (altAv >= AVERAGE_ALTITUDE / 2 && altAv < AVERAGE_ALTITUDE && wDisAv >= AVERAGE_WATER_DISTANCE)
                 {
@@ -250,47 +240,55 @@ public class World
                         {
                             newCoord = new Coord(k, tempM);
                             grid[newCoord] = (int)BiomeType.SAVANNAH;
-                            coords.Push(newCoord);
                         }
                         tempM++;
                     }
-                    fillCurrents(coords, (int)BiomeType.SAVANNAH);
                 }
                 wDisAv = 0;
                 altAv = 0;
             }
             m = 0;
         }
+        fillCurrents();
     }
 
-
-    private void fillCurrents(Stack<Coord> Coords, int type)
+    private void fillCurrents()
     {
-
-        /*Animal[] animalArray = new Animal[5];
-        biomeTypes[type].getAnimalSet().CopyTo(animalArray);
-        Plant[] plantArray = new Plant[5];
-        biomeTypes[type].getPlantSet().CopyTo(plantArray);
-        System.Random generator = new System.Random();
-        while (Coords.Count > 0) {
-            Coord point = Coords.Pop();
-            int i = generator.Next(3);
-            if (i == 1) {
-                i = generator.Next(5);
-                Animal newAnimal = animalArray[i];
-                newAnimal.setPosition(point);
-                if (!currentAnimals.Contains(newAnimal)) { }
-                    currentAnimals.Add(newAnimal);
-                //Debug.Log("added: " + newAnimal);
+        for(int i=0; i<size; i++)
+        {
+            for(int j=0; j<size; j++)
+            {
+                var whatToSpawn = Random.Range(0, 21);
+                // 0 = animal spawn
+                // 1, 2 = plant spawn
+                // 3+ = no spawn;
+                if(whatToSpawn == 0)
+                {
+                    Coord currentCoord = new Coord(i, j);
+                    int animalOrder = Random.Range(0, 5);
+                    int biomeIndex = grid[currentCoord];
+                    Biome currentBiome = biomeTypes[biomeIndex];
+                    HashSet<Animal> biomeAnimals = currentBiome.getAnimalSet();
+                    Animal[] biomeAnimalsToArray = new Animal[5];
+                    biomeAnimals.CopyTo(biomeAnimalsToArray);
+                    Animal copyAnimal = biomeAnimalsToArray[animalOrder];
+                    Animal animalToAdd = new Animal(copyAnimal.getId(), copyAnimal.getName(), copyAnimal.getDefinition(), currentCoord);
+                    currentAnimals.Add(animalToAdd);
+                }
+                else if(whatToSpawn == 1 || whatToSpawn == 2)
+                {
+                    Coord currentCoord = new Coord(i, j);
+                    int plantOrder = Random.Range(0, 5);
+                    int biomeIndex = grid[currentCoord];
+                    Biome currentBiome = biomeTypes[biomeIndex];
+                    HashSet<Plant> biomePlants = currentBiome.getPlantSet();
+                    Plant[] biomePlantsToArray = new Plant[5];
+                    biomePlants.CopyTo(biomePlantsToArray);
+                    Plant copyPlant = biomePlantsToArray[plantOrder];
+                    Plant plantToAdd = new Plant(copyPlant.getId(), copyPlant.getName(), copyPlant.getDefinition(), currentCoord);
+                    currentPlants.Add(plantToAdd);
+                }
             }
-            if (i == 2) {
-                i = generator.Next(5);
-                Plant newPlant = plantArray[i];
-                newPlant.setPosition(point);
-                if(!currentPlants.Contains(newPlant))
-                    currentPlants.Add(newPlant);
-                //Debug.Log("added: " + newPlant);
-            }
-        }*/
+        }
     }
 }

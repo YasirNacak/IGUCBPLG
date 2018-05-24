@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
 
         int lowerThreshold = GameObject.Find("MapGenerator").GetComponent<MapGenerator>().meshHeightMultiplier * 10;
         if (GameObject.Find("MapGenerator").GetComponent<MapGenerator>().isCreating == false)
-            pos.y = Mathf.Clamp(pos.y, lowerThreshold + lowerThreshold * 0.25f, lowerThreshold * 2);
+            pos.y = Mathf.Clamp(pos.y, lowerThreshold + lowerThreshold * 0.25f, lowerThreshold * 1.75f);
         transform.position = pos;
         transform.eulerAngles = rot;
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 
@@ -258,14 +259,15 @@ public class MapGenerator : MonoBehaviour
         GameObject.Find("LacunarityText").SetActive(false);
         GameObject.Find("HeightMultiplierText").SetActive(false);
         GameObject.Find("WaterLevelText").SetActive(false);
-
+        //GameObject.Find("RightPanel").SetActive(false);
         foreach (Animal a in World.getCurrentAnimals())
         {
             // TODO : After adding all prefabs, remove the if and add a variable string to resource load
             if (a.getName().Equals("Crab"))
             {
                 GameObject go = Instantiate(Resources.Load("Prefabs/Crab")) as GameObject;
-                go.transform.position = new Vector3(a.getPosition().getX() * 10, (meshHeightMultiplier * 10.0f), -a.getPosition().getY() * 10);
+                go.AddComponent<MeshCollider>();
+                go.transform.position = new Vector3(a.getPosition().getX() * 10, (noiseMap[a.getPosition().getY(), a.getPosition().getX()] * meshHeightMultiplier) * 10.0f , -a.getPosition().getY() * 10);
             }
         }
 
@@ -275,9 +277,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public void QuitGame()
+    public void GoToMenu()
     {
-        Application.Quit();
+        SceneManager.LoadScene("Menu");
     }
 }
 

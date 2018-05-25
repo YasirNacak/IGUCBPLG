@@ -46,6 +46,10 @@ public class MapGenerator : MonoBehaviour
     public GameObject waterObject;
     public GameObject planeObject;
 
+    public GameObject popUpPanel;
+    public GameObject popUpName;
+    public GameObject popUpDescription;
+
     [HideInInspector]
     public float[,] noiseMap;
 
@@ -229,9 +233,12 @@ public class MapGenerator : MonoBehaviour
         GameObject.Find("Main Camera").transform.position = new Vector3(0, 250f, 0);
         GameObject.Find("Main Camera").transform.localEulerAngles = new Vector3(60f, 0, 0);
         meshObject.SetActive(true);
-
         waterObject.SetActive(true);
         planeObject.SetActive(false);
+
+        popUpPanel.SetActive(true);
+        popUpName.SetActive(true);
+        popUpDescription.SetActive(true);
         drawMode = DrawMode.HeightMesh;
         isCreating = false;
         GenerateMap();
@@ -267,11 +274,11 @@ public class MapGenerator : MonoBehaviour
             {
                 GameObject go = Instantiate(Resources.Load("Prefabs/Crab")) as GameObject;
                 go.AddComponent<MeshCollider>();
-                go.transform.position = new Vector3(a.getPosition().getX() * 10, (noiseMap[a.getPosition().getY(), a.getPosition().getX()] * meshHeightMultiplier) * 10.0f , -a.getPosition().getY() * 10);
+                go.transform.position = new Vector3(a.getPosition().getX() * 10, (noiseMap[a.getPosition().getY(), a.getPosition().getX()] * meshHeightMultiplier) * 10.0f, -a.getPosition().getY() * 10);
             }
         }
 
-        foreach(Plant p in World.getCurrentPlants())
+        foreach (Plant p in World.getCurrentPlants())
         {
 
         }

@@ -254,15 +254,15 @@ public class World
 
     private void fillCurrents()
     {
-        for(int i=0; i<size; i++)
+        for (int i = 0; i < size; i++)
         {
-            for(int j=0; j<size; j++)
+            for (int j = 0; j < size; j++)
             {
                 var whatToSpawn = Random.Range(0, 21);
                 // 0 = animal spawn
                 // 1, 2 = plant spawn
                 // 3+ = no spawn;
-                if(whatToSpawn == 0)
+                if (whatToSpawn == 0)
                 {
                     Coord currentCoord = new Coord(i, j);
                     int animalOrder = Random.Range(0, 5);
@@ -275,7 +275,7 @@ public class World
                     Animal animalToAdd = new Animal(copyAnimal.getId(), copyAnimal.getName(), copyAnimal.getDefinition(), currentCoord);
                     currentAnimals.Add(animalToAdd);
                 }
-                else if(whatToSpawn == 1 || whatToSpawn == 2)
+                else if (whatToSpawn == 1 || whatToSpawn == 2)
                 {
                     Coord currentCoord = new Coord(i, j);
                     int plantOrder = Random.Range(0, 5);

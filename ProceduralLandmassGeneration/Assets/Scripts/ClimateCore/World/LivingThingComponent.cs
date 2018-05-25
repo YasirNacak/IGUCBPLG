@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class LivingThingComponent : MonoBehaviour
 {
@@ -12,8 +13,10 @@ public class LivingThingComponent : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log(livingThing.getName());
-        Debug.Log(livingThing.getDefinition());
+        string name = livingThing.getName();
+        string description = livingThing.getDefinition();
+        GameObject.Find("PopupName").GetComponent<Text>().text = name;
+        GameObject.Find("PopupDescription").GetComponent<Text>().text = description;
         if (!World.getExplored().Contains(livingThing))
         {
             World.getExplored().Add(livingThing);

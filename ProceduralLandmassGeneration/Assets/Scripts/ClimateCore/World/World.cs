@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class World
 {
@@ -258,7 +259,7 @@ public class World
         {
             for (int j = 0; j < size; j++)
             {
-                var whatToSpawn = Random.Range(0, 21);
+                var whatToSpawn = Random.Range(0, 101);
                 // 0 = animal spawn
                 // 1, 2 = plant spawn
                 // 3+ = no spawn;

@@ -3,26 +3,25 @@
 public class CameraController : MonoBehaviour
 {
     public float panSpeed = 20f;
-    public float panBorderThickness = 10f;
     public float scrollSpeed = 150f;
 
     void Update()
     {
         Vector3 pos = transform.position;
         Vector3 rot = transform.eulerAngles;
-        if (Input.GetKey("w") /*|| Input.mousePosition.y >= Screen.height - panBorderThickness*/)
+        if (Input.GetKey("w"))
         {
             pos.z += panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("s") /*|| Input.mousePosition.y <= panBorderThickness*/)
+        if (Input.GetKey("s"))
         {
             pos.z -= panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("d") /*|| Input.mousePosition.x >= Screen.width - panBorderThickness*/)
+        if (Input.GetKey("d"))
         {
             pos.x += panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("a") /*|| Input.mousePosition.x <= panBorderThickness*/)
+        if (Input.GetKey("a"))
         {
             pos.x -= panSpeed * Time.deltaTime;
         }
@@ -33,7 +32,7 @@ public class CameraController : MonoBehaviour
 
         int lowerThreshold = GameObject.Find("MapGenerator").GetComponent<MapGenerator>().meshHeightMultiplier * 10;
         if (GameObject.Find("MapGenerator").GetComponent<MapGenerator>().isCreating == false)
-            pos.y = Mathf.Clamp(pos.y, lowerThreshold + lowerThreshold * 0.25f, lowerThreshold * 1.75f);
+            pos.y = Mathf.Clamp(pos.y, lowerThreshold + lowerThreshold * 0.25f, lowerThreshold * 1.50f);
         transform.position = pos;
         transform.eulerAngles = rot;
     }

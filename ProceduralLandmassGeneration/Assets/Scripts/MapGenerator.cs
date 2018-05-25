@@ -266,20 +266,26 @@ public class MapGenerator : MonoBehaviour
         GameObject.Find("LacunarityText").SetActive(false);
         GameObject.Find("HeightMultiplierText").SetActive(false);
         GameObject.Find("WaterLevelText").SetActive(false);
-        //GameObject.Find("RightPanel").SetActive(false);
         foreach (Animal a in World.getCurrentAnimals())
         {
-            // TODO : After adding all prefabs, remove the if and add a variable string to resource load
-            if (a.getName().Equals("Crab"))
-            {
-                GameObject go = Instantiate(Resources.Load("Prefabs/Crab")) as GameObject;
-                go.AddComponent<MeshCollider>();
-                go.transform.position = new Vector3(a.getPosition().getX() * 10, (noiseMap[a.getPosition().getY(), a.getPosition().getX()] * meshHeightMultiplier) * 10.0f, -a.getPosition().getY() * 10);
-            }
+            GameObject go = Instantiate(Resources.Load("Prefabs/" + a.getName())) as GameObject;
+            go.AddComponent<MeshCollider>();
+            int zPos = a.getPosition().getX() * 10;
+            if (zPos == 0) zPos = 10;
+            go.transform.position = new Vector3(a.getPosition().getY() * 10, (noiseMap[a.getPosition().getX(),
+                a.getPosition().getY()] * meshHeightMultiplier) * 10.0f,
+                -zPos);
         }
 
         foreach (Plant p in World.getCurrentPlants())
         {
+            GameObject go = Instantiate(Resources.Load("Prefabs/" + p.getName())) as GameObject;
+            go.AddComponent<MeshCollider>();
+            int zPos = p.getPosition().getX() * 10;
+            if (zPos == 0) zPos = 10;
+            go.transform.position = new Vector3(p.getPosition().getY() * 10,
+                (noiseMap[p.getPosition().getX(), p.getPosition().getY()] * meshHeightMultiplier) * 10.0f,
+                -zPos);
 
         }
     }

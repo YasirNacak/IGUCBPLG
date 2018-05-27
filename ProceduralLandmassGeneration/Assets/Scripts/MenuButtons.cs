@@ -11,7 +11,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void GoToLibrary()
     {
-        SceneManager.LoadScene("Library");
+
     }
     public void QuitGame()
     {

@@ -1,6 +1,6 @@
 using System;
 
-public abstract class LivingThing : IComparable<LivingThing>
+public abstract class LivingThing : IComparable<LivingThing> 
 {
     protected string name = null;
     protected string description = null;

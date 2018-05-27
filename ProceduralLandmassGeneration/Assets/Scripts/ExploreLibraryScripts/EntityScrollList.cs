@@ -10,11 +10,20 @@ public class EntityScrollList : MonoBehaviour
     public ObjectPoolScript entityObject;
     private InputField searchField;
     private List<KeyValuePair<string, GameObject>> pair = new List<KeyValuePair<string, GameObject>>();
+    public static GameObject Definition { get; set; }
+    public static GameObject Header { get; set; }
+    public static GameObject NothingSelected { get; set; }
 
     void Start ()
     {
         searchField = GameObject.Find("SearchField").GetComponent<InputField>();
-        searchField.onValueChanged.AddListener( delegate { CheckVisibility(); });
+        Definition = GameObject.Find("Definition");
+        Header = GameObject.Find("Header");
+        NothingSelected = GameObject.Find("NothingSelected");
+        Definition.SetActive(false);
+        Header.SetActive(false);
+        NothingSelected.SetActive(true);
+        searchField.onValueChanged.AddListener( delegate { CheckVisibility(); } );
         Refresh();
     }
 
@@ -33,7 +42,7 @@ public class EntityScrollList : MonoBehaviour
             GameObject newItem = entityObject.GetObject();
             newItem.transform.SetParent(contentPanel);
             EntityInfo element = newItem.GetComponent<EntityInfo>();
-            element.Setup(currentItem, this);
+            element.Setup(currentItem);
             pair.Add(new KeyValuePair<string, GameObject>(currentItem.getName(), newItem));
         }
     }
@@ -57,4 +66,3 @@ public class EntityScrollList : MonoBehaviour
         }
     }
 }
-

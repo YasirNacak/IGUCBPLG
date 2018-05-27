@@ -1,18 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class EntityInfo : MonoBehaviour
 {
     public Button livingThingButton;
     public Text theNameOfThing;
-
     private LivingThing thing;
-    private EntityScrollList list;
 
-	public void Setup (LivingThing currentItem, EntityScrollList entityList)
+    public void Setup(LivingThing currentItem)
     {
         thing = currentItem;
-        list = entityList;
         theNameOfThing.text = thing.getName();
-	}
+        livingThingButton.onClick.AddListener( delegate { EntityOnClick(thing); });
+    }
+
+    public void EntityOnClick(LivingThing thing)
+    {
+        EntityScrollList.Definition.SetActive(true);
+        EntityScrollList.Header.SetActive(true);
+        EntityScrollList.NothingSelected.SetActive(false);
+        GameObject.Find("EntityName").GetComponent<Text>().text = thing.getName();
+        GameObject.Find("EntityDef").GetComponent<Text>().text = thing.getDefinition();
+    }
+
 }

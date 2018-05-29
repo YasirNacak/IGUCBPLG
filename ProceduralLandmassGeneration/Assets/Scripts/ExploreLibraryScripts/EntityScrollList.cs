@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityScrollList : MonoBehaviour 
+public class EntityScrollList : MonoBehaviour
 {
     private List<LivingThing> itemList = World.getExplored();
     public Transform contentPanel;
@@ -54,7 +54,7 @@ public class EntityScrollList : MonoBehaviour
         {
             if (value.Length <= pair[i].Key.Length)
             {
-                if (value.CompareTo(pair[i].Key.Substring(0, value.Length)) != 0)
+                if (value.ToLower().CompareTo(pair[i].Key.Substring(0, value.Length).ToLower()) != 0)
                     pair[i].Value.SetActive(false);
                 else
                     pair[i].Value.SetActive(true);
@@ -65,4 +65,13 @@ public class EntityScrollList : MonoBehaviour
             }
         }
     }
+
+    private void UpdateLastSearched()
+    {
+   /*     for (int i = 0; i < DropDownMenu.Count; ++i)
+        {
+
+        }*/
+    }
+
 }

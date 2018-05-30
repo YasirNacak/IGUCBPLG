@@ -8,22 +8,23 @@ public class EntityScrollList : MonoBehaviour
     private List<LivingThing> itemList = World.getExplored();
     public Transform contentPanel;
     public ObjectPoolScript entityObject;
-    private InputField searchField;
-    private List<KeyValuePair<string, GameObject>> pair = new List<KeyValuePair<string, GameObject>>();
+    private static List<KeyValuePair<string, GameObject>> pair = new List<KeyValuePair<string, GameObject>>();
+    public static InputField SearchField { get; set; }
     public static GameObject Definition { get; set; }
     public static GameObject Header { get; set; }
     public static GameObject NothingSelected { get; set; }
 
     void Start ()
     {
-        searchField = GameObject.Find("SearchField").GetComponent<InputField>();
+        SearchField = GameObject.Find("SearchField").GetComponent<InputField>();
         Definition = GameObject.Find("Definition");
         Header = GameObject.Find("Header");
         NothingSelected = GameObject.Find("NothingSelected");
         Definition.SetActive(false);
         Header.SetActive(false);
         NothingSelected.SetActive(true);
-        searchField.onValueChanged.AddListener( delegate { CheckVisibility(); } );
+        SearchField.onValueChanged.AddListener( delegate { CheckVisibility(); } );
+        pair.Clear();
         Refresh();
     }
 
@@ -49,7 +50,12 @@ public class EntityScrollList : MonoBehaviour
 
     public void CheckVisibility()
     {
-        string value = searchField.text;
+        string value = SearchField.text;
+        CheckElements(value);
+    }
+
+    public static void CheckElements(string value)
+    {
         for (int i = 0; i < pair.Count; ++i)
         {
             if (value.Length <= pair[i].Key.Length)
@@ -64,14 +70,6 @@ public class EntityScrollList : MonoBehaviour
                 pair[i].Value.SetActive(false);
             }
         }
-    }
-
-    private void UpdateLastSearched()
-    {
-   /*     for (int i = 0; i < DropDownMenu.Count; ++i)
-        {
-
-        }*/
     }
 
 }

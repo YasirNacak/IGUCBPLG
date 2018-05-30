@@ -8,7 +8,7 @@ public class EntityInfo : MonoBehaviour
     private LivingThing thing;
     private const int ITEM_LIMIT = 5;
 
-   public void Setup(LivingThing currentItem)
+    public void Setup(LivingThing currentItem)
     {
         thing = currentItem;
         theNameOfThing.text = thing.getName();
@@ -17,12 +17,6 @@ public class EntityInfo : MonoBehaviour
     
     public void EntityOnClick(LivingThing thing)
     {
-       /* if (!SeachContainer.searchedList.Contains(thing))
-        {
-            if (SeachContainer.searchedList.Count == ITEM_LIMIT)
-                SeachContainer.searchedList.RemoveLast();
-            SeachContainer.searchedList.AddFirst(thing);
-        }*/
         EntityScrollList.Definition.SetActive(true);
         EntityScrollList.Header.SetActive(true);
         EntityScrollList.NothingSelected.SetActive(false);

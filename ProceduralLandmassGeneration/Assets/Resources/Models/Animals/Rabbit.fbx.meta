@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 5975281838bec8a4fa678a7b4a24c033
-timeCreated: 1527201233
+guid: 74ee8c87b33558244a9aa97a21f5f851
+timeCreated: 1527598374
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -9,13 +9,13 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Cactus
+    4300000: Rabbit
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: d752aa57823e0a842913e5242e1e1317, type: 2}
+      name: (null).001
+    second: {fileID: 2100000, guid: 3fbe4ab7770f1964b882c3252477df02, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

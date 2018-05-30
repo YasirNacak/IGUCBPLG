@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 34a422724c4734c4981c93ceb2c5b0e8
-timeCreated: 1527201212
+guid: 541ef86cb71cf764a95d031c60ce3a26
+timeCreated: 1527598355
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -9,13 +9,18 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: BaobabTree
+    4300000: AloeTree
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: d752aa57823e0a842913e5242e1e1317, type: 2}
+      name: Bark
+    second: {fileID: 2100000, guid: c0f9ac553a4c6104badf7b9b1c0b2fe6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves
+    second: {fileID: 2100000, guid: c35f300ade8fca2438bd701a6664b6a8, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -45,7 +50,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 2
+    globalScale: 3
     meshCompression: 0
     addColliders: 0
     importVisibility: 1

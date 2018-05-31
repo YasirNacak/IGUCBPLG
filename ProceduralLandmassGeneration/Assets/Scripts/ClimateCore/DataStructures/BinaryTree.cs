@@ -3,16 +3,16 @@ using System.Text;
 public class BinaryTree<E>
 {
     /** Class to encapsulate a tree node. */
-    protected class Node
+    protected class Node<E>
     {
         /** The information stored in this node. */
         internal E data;
 
         /** Reference to the left child. */
-        internal Node left;
+        internal Node<E> left;
 
         /** Reference to the right child. */
-        internal Node right;
+        internal Node<E> right;
 
         /** Construct a node with given data and no children.
             @param data The data to store in this node
@@ -35,14 +35,14 @@ public class BinaryTree<E>
 
     // Data Field
     /** The root of the binary tree */
-    protected Node root;
+    protected Node<E> root;
 
     public BinaryTree()
     {
         root = null;
     }
 
-    protected BinaryTree(Node root)
+    protected BinaryTree(Node<E> root)
     {
         this.root = root;
     }
@@ -53,7 +53,7 @@ public class BinaryTree<E>
     public BinaryTree(E data, BinaryTree<E> leftTree,
                         BinaryTree<E> rightTree)
     {
-        root = new Node(data);
+        root = new Node<E>(data);
         if (leftTree != null)
         {
             root.left = leftTree.root;
@@ -105,10 +105,6 @@ public class BinaryTree<E>
         }
     }
 
-    /** Return the data field of the root
-            @return the data field of the root
-            or null if the root is null
-        */
     public E getData()
     {
         if (root != null)
@@ -121,9 +117,6 @@ public class BinaryTree<E>
         }
     }
 
-    /** Determine whether this tree is a leaf.
-        @return true if the root has no children
-        */
     public bool isLeaf()
     {
         return (root.left == null && root.right == null);
@@ -136,12 +129,7 @@ public class BinaryTree<E>
         return sb.ToString();
     }
 
-    /** Perform a preorder traversal.
-        @param node The local root
-        @param depth The depth
-        @param sb The string buffer to save the output
-        */
-    private void preOrderTraverse(Node node, int depth,
+    private void preOrderTraverse(Node<E> node, int depth,
                                     StringBuilder sb)
     {
         for (int i = 1; i < depth; i++)

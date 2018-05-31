@@ -10,7 +10,7 @@ public class BinarySearchTree<E> : BinaryTree<E>, SearchTree<E> where E : ICompa
         return find(root, target);
     }
 
-    private E find(Node localRoot, E target)
+    private E find(Node<E> localRoot, E target)
     {
         if (localRoot == null)
             return default(E);
@@ -29,12 +29,12 @@ public class BinarySearchTree<E> : BinaryTree<E>, SearchTree<E> where E : ICompa
         return addReturn;
     }
 
-    private Node add(Node localRoot, E item)
+    private Node<E> add(Node<E> localRoot, E item)
     {
         if (localRoot == null)
         {
             addReturn = true;
-            return new Node(item);
+            return new Node<E>(item);
         }
         else if (item.CompareTo(localRoot.data) == 0)
         {
@@ -59,7 +59,7 @@ public class BinarySearchTree<E> : BinaryTree<E>, SearchTree<E> where E : ICompa
         return deleteReturn;
     }
 
-    private Node delete(Node localRoot, E item)
+    private Node<E> delete(Node<E> localRoot, E item)
     {
         if (localRoot == null)
         {
@@ -115,7 +115,7 @@ public class BinarySearchTree<E> : BinaryTree<E>, SearchTree<E> where E : ICompa
         return find(target) != null;
     }
 
-    private E findLargestChild(Node parent)
+    private E findLargestChild(Node<E> parent)
     {
         if (parent.right.right == null)
         {

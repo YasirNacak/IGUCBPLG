@@ -14,14 +14,14 @@ public class World
     private int size;
 
     private List<Biome> biomeTypes;
-    private static BinarySearchTree<LivingThing> database;
+    private static AVLTree<LivingThing> database;
     private static List<LivingThing> explored = new List<LivingThing>();
 
     internal Dictionary<Coord, int> grid;
     private static List<Plant> currentPlants;
     private static List<Animal> currentAnimals;
 
-    public static BinarySearchTree<LivingThing> getDatabase() { return database; }
+    public static AVLTree<LivingThing> getDatabase() { return database; }
     public static List<LivingThing> getExplored() { return explored; }
     public static List<Animal> getCurrentAnimals() { return currentAnimals; }
     public static List<Plant> getCurrentPlants() { return currentPlants; }
@@ -49,7 +49,7 @@ public class World
 
     private void fillDatabaseFromFile()
     {
-        database = new BinarySearchTree<LivingThing>();
+        database = new AVLTree<LivingThing>();
         var inp = Resources.Load<TextAsset>("animals");
         var inpContent = inp.text.Split("\n"[0]);
         Coord nullCoord = new Coord(-1, -1);

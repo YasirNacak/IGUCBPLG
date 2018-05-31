@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EntityScrollList : MonoBehaviour
@@ -72,4 +73,12 @@ public class EntityScrollList : MonoBehaviour
         }
     }
 
+    public void BackToMenu()
+    {
+        for (int i = 0; i < pair.Count; ++i)
+        {
+            entityObject.ReturnObject(pair[i].Value);
+        }
+        SceneManager.LoadScene("Menu");
+    }
 }

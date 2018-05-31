@@ -41,7 +41,7 @@ public class LastSearchedContainer : MonoBehaviour, IDeselectHandler
                 GameObject retVal = objList.Last.Value;
                 objList.RemoveLast();
                 elementSet.Remove(lastAdded);
-                Destroy(retVal);
+                objectPool.ReturnObject(retVal);
             }
             elementSet.Add(lastInput);
             lastAdded = lastInput;

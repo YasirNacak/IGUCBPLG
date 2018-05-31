@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class LastSearchedContainer : MonoBehaviour, IDeselectHandler
 {
     private string lastAdded;
-    private LinkedList<GameObject> objList = new LinkedList<GameObject>();
+    private Deque<GameObject> objList = new Deque<GameObject>();
     private HashSet<string> elementSet = new HashSet<string>();
     public Transform contentPanel;
     public ObjectPoolScript objectPool;
@@ -27,7 +25,7 @@ public class LastSearchedContainer : MonoBehaviour, IDeselectHandler
 
     public void FocusSearchField()
     {
-        if (objList.Count != 0)
+        if (objList.GetSize() != 0)
             searchContainer.SetActive(true);
     }
 
@@ -36,10 +34,9 @@ public class LastSearchedContainer : MonoBehaviour, IDeselectHandler
         string lastInput = EntityScrollList.SearchField.text;
         if (!elementSet.Contains(lastInput) && lastInput != "")
         {
-            if (objList.Count == HISTORY)
+            if (objList.GetSize() == HISTORY)
             {
-                GameObject retVal = objList.Last.Value;
-                objList.RemoveLast();
+                GameObject retVal = objList.PollLast();
                 elementSet.Remove(lastAdded);
                 objectPool.ReturnObject(retVal);
             }
@@ -49,7 +46,7 @@ public class LastSearchedContainer : MonoBehaviour, IDeselectHandler
             obj.transform.SetParent(contentPanel);
             SearchedElementInfo element = obj.GetComponent<SearchedElementInfo>();
             element.Setup(lastInput);
-            objList.AddFirst(obj);
+            objList.OfferFirst(obj);
         }
     }
 }

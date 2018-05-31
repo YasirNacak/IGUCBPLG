@@ -6,7 +6,6 @@ public class EntityInfo : MonoBehaviour
     public Button livingThingButton;
     public Text theNameOfThing;
     private LivingThing thing;
-    private const int ITEM_LIMIT = 5;
 
     public void Setup(LivingThing currentItem)
     {

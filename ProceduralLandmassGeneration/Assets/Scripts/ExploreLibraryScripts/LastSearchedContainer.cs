@@ -14,10 +14,14 @@ public class LastSearchedContainer : MonoBehaviour, IDeselectHandler
     private const int HISTORY = 5;
     public static GameObject searchContainer;
 
-    // Use this for initialization
     void Start()
     {
         searchContainer = GameObject.Find("SearchContainer");
+        searchContainer.SetActive(false);
+    }
+
+    public void DeActive()
+    {
         searchContainer.SetActive(false);
     }
 
@@ -46,7 +50,6 @@ public class LastSearchedContainer : MonoBehaviour, IDeselectHandler
             SearchedElementInfo element = obj.GetComponent<SearchedElementInfo>();
             element.Setup(lastInput);
             objList.AddFirst(obj);
-            searchContainer.SetActive(false);
         }
     }
 }

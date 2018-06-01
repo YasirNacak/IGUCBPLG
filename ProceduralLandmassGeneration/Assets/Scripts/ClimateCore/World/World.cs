@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
 public class World
 {
@@ -8,7 +7,7 @@ public class World
     private const float MINIMUM_WATER_DISTANCE = 0.7f;
     private const float AVERAGE_WATER_DISTANCE = 4f;
     private const float AVERAGE_ALTITUDE = 0.3f;
-    enum BiomeType { BEACH, RAIN_FOREST, MOUNTAIN, TUNDRA, DESERT, SAVANNAH, NO_BIOME };
+    public enum BiomeType { BEACH, RAIN_FOREST, MOUNTAIN, TUNDRA, DESERT, SAVANNAH, NO_BIOME };
     private int animalCount = 0;
     private int k = 0;
     private int size;
@@ -17,7 +16,7 @@ public class World
     private static AVLTree<LivingThing> database;
     private static List<LivingThing> explored = new List<LivingThing>();
 
-    internal Dictionary<Coord, int> grid;
+    private Dictionary<Coord, BiomeType> grid;
     private static List<Plant> currentPlants;
     private static List<Animal> currentAnimals;
 
@@ -151,7 +150,7 @@ public class World
         float altAv = 0;
         float wDisAv = 0;
         int m = 0;
-        grid = new Dictionary<Coord, int>();
+        grid = new Dictionary<Coord, BiomeType>();
         currentPlants = new List<Plant>();
         currentAnimals = new List<Animal>();
         int tempM = 0;
@@ -192,7 +191,7 @@ public class World
                         for (int k = b * GRID_DIVIDER; k < b * GRID_DIVIDER + GRID_DIVIDER; k++)
                         {
                             newCoord = new Coord(k, tempM);
-                            grid[newCoord] = (int)BiomeType.RAIN_FOREST;
+                            grid[newCoord] = BiomeType.RAIN_FOREST;
                         }
                         tempM++;
                     }
@@ -204,7 +203,7 @@ public class World
                         for (int k = b * GRID_DIVIDER; k < b * GRID_DIVIDER + GRID_DIVIDER; k++)
                         {
                             newCoord = new Coord(k, tempM);
-                            grid[newCoord] = (int)BiomeType.MOUNTAIN;
+                            grid[newCoord] = BiomeType.MOUNTAIN;
                         }
                         tempM++;
                     }
@@ -216,7 +215,7 @@ public class World
                         for (int k = b * GRID_DIVIDER; k < b * GRID_DIVIDER + GRID_DIVIDER; k++)
                         {
                             newCoord = new Coord(k, tempM);
-                            grid[newCoord] = (int)BiomeType.TUNDRA;
+                            grid[newCoord] = BiomeType.TUNDRA;
                         }
                         tempM++;
                     }
@@ -228,7 +227,7 @@ public class World
                         for (int k = b * GRID_DIVIDER; k < b * GRID_DIVIDER + GRID_DIVIDER; k++)
                         {
                             newCoord = new Coord(k, tempM);
-                            grid[newCoord] = (int)BiomeType.DESERT;
+                            grid[newCoord] = BiomeType.DESERT;
                         }
                         tempM++;
                     }
@@ -240,7 +239,7 @@ public class World
                         for (int k = b * GRID_DIVIDER; k < b * GRID_DIVIDER + GRID_DIVIDER; k++)
                         {
                             newCoord = new Coord(k, tempM);
-                            grid[newCoord] = (int)BiomeType.SAVANNAH;
+                            grid[newCoord] = BiomeType.SAVANNAH;
                         }
                         tempM++;
                     }
@@ -267,8 +266,8 @@ public class World
                 {
                     Coord currentCoord = new Coord(i, j);
                     int animalOrder = Random.Range(0, 5);
-                    int biomeIndex = grid[currentCoord];
-                    Biome currentBiome = biomeTypes[biomeIndex];
+                    BiomeType biomeIndex = grid[currentCoord];
+                    Biome currentBiome = biomeTypes[(int)biomeIndex];
                     HashSet<Animal> biomeAnimals = currentBiome.getAnimalSet();
                     Animal[] biomeAnimalsToArray = new Animal[5];
                     biomeAnimals.CopyTo(biomeAnimalsToArray);
@@ -280,8 +279,8 @@ public class World
                 {
                     Coord currentCoord = new Coord(i, j);
                     int plantOrder = Random.Range(0, 5);
-                    int biomeIndex = grid[currentCoord];
-                    Biome currentBiome = biomeTypes[biomeIndex];
+                    BiomeType biomeIndex = grid[currentCoord];
+                    Biome currentBiome = biomeTypes[(int)biomeIndex];
                     HashSet<Plant> biomePlants = currentBiome.getPlantSet();
                     Plant[] biomePlantsToArray = new Plant[5];
                     biomePlants.CopyTo(biomePlantsToArray);
@@ -292,4 +291,10 @@ public class World
             }
         }
     }
+    
+    public Dictionary<Coord, BiomeType> GetGrid()
+    {
+        return (grid);
+    }
+
 }

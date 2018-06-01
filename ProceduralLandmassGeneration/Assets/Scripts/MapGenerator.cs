@@ -97,7 +97,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < mapSize; j++)
             {
-                float currentBiome = world.grid[new Coord(i, j)];
+                float currentBiome = (int)world.GetGrid()[new Coord(i, j)];
 
                 for (int k = 0; k < biomeRegions.Length; k++)
                 {
@@ -114,7 +114,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < mapSize; j++)
             {
-                float currentBiome = world.grid[new Coord(i, j)];
+                float currentBiome = (int)world.GetGrid()[new Coord(i, j)];
 
                 for (int k = 0; k < biomeRegions.Length; k++)
                 {

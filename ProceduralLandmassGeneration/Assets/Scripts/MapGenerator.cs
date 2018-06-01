@@ -279,14 +279,16 @@ public class MapGenerator : MonoBehaviour
 
         foreach (Plant p in World.getCurrentPlants())
         {
-            GameObject go = Instantiate(Resources.Load("Prefabs/" + p.getName())) as GameObject;
-            go.AddComponent<MeshCollider>();
-            int zPos = p.getPosition().getX() * 10;
-            if (zPos == 0) zPos = 10;
-            go.transform.position = new Vector3(p.getPosition().getY() * 10,
-                (noiseMap[p.getPosition().getX(), p.getPosition().getY()] * meshHeightMultiplier) * 10.0f,
-                -zPos);
-
+            if (noiseMap[p.getPosition().getX(), p.getPosition().getY()] >= waterLevel)
+            {
+                GameObject go = Instantiate(Resources.Load("Prefabs/" + p.getName())) as GameObject;
+                go.AddComponent<MeshCollider>();
+                int zPos = p.getPosition().getX() * 10;
+                if (zPos == 0) zPos = 10;
+                go.transform.position = new Vector3(p.getPosition().getY() * 10,
+                    (noiseMap[p.getPosition().getX(), p.getPosition().getY()] * meshHeightMultiplier) * 10.0f,
+                    -zPos);
+            }
         }
     }
 
